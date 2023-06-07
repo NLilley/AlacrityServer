@@ -1,0 +1,2 @@
+--INSERT INTO web_messages (root_message_id, to_id, from_id, message_kind)
+--SELECT IFNULL((SELECT seq + 1 FROM SQLITE_SEQUENCE WHERE name = 'web_message' LIMIT 1), 1), 1, 1, 1;
