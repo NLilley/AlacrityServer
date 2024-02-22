@@ -18,16 +18,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Database\Schemas\*">
+    <None Update="DataBase2\Schemas\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Database\InitialData\*">
+    <None Update="DataBase2\InitialData\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Database\Store\" />
+    <Folder Include="DataBase2\Store\" />
   </ItemGroup>
 
 </Project>
