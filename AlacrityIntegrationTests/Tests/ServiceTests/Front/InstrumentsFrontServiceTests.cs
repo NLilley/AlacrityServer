@@ -39,8 +39,11 @@ internal class InstrumentsFrontServiceTests
     public async Task GetInstruments()
     {
         var instruments = await _service.GetInstruments();
-        Assert.True(instruments.Count > 16);
-        Assert.True(instruments.All(i => i.InstrumentId == (long)SpecialInstruments.Cash || !string.IsNullOrWhiteSpace(i.IconPath)));
+        Assert.That(instruments.Count > 16, Is.True);
+        Assert.That(
+            instruments.All(i => i.InstrumentId == (long)SpecialInstruments.Cash || !string.IsNullOrWhiteSpace(i.IconPath)),
+            Is.True
+        );
     }
 
     [Test]
@@ -65,12 +68,12 @@ internal class InstrumentsFrontServiceTests
         );
 
         var instrument = await _service.GetInstrument(_instrumentId);
-        Assert.AreEqual(1, instrument.InstrumentId);
-        Assert.AreEqual("Adobe", instrument.Name);
-        Assert.AreEqual(500, instrument.PreviousClose);
+        Assert.That(1, Is.EqualTo(instrument.InstrumentId));
+        Assert.That("Adobe", Is.EqualTo(instrument.Name));
+        Assert.That(500, Is.EqualTo(instrument.PreviousClose));
 
         var indicators = await _service.GetIndicators(_instrumentId);
-        Assert.AreEqual(1, indicators.Count);
-        Assert.AreEqual("Test", indicators["Test"].Name);
+        Assert.That(1, Is.EqualTo(indicators.Count));
+        Assert.That("Test", Is.EqualTo(indicators["Test"].Name));
     }
 }

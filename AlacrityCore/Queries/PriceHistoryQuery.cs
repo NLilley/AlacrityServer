@@ -8,6 +8,7 @@ internal interface IPriceHistoryQuery
     public Task<PriceHistoryDto> GetPriceHistory(long instrumentId, DateTime start, DateTime end, CandleTimePeriod period);
     public Task<CandleDto> GetLatestCandle(long instrumentId);
     Task AddCandle(long instrumentId, CandleTimePeriod period, CandleDto candle);
+    Task DeleteOldCandles(DateTime oldThan);
 }
 
 internal class PriceHistoryQuery : IPriceHistoryQuery
@@ -84,4 +85,13 @@ internal class PriceHistoryQuery : IPriceHistoryQuery
                 Close = candle.Close
             }
     );
+
+    public async Task DeleteOldCandles(DateTime olderThan)
+        => _connection.Query(
+            @"DELETE FROM price_history WHERE created_date < @Date",
+            new
+            {
+                Date = olderThan
+            }
+        );
 }

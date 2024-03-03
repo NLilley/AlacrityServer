@@ -40,14 +40,14 @@ public class PriceHistoryBackServiceTests
             End = new DateTime(2024, 01, 01)
         });
 
-        Assert.AreEqual(1, positions.PriceHistory.Data.Count);
-        Assert.AreEqual(new DateTime(2023, 01, 01), positions.PriceHistory.Data[0].Date);
+        Assert.That(1, Is.EqualTo(positions.PriceHistory.Data.Count));
+        Assert.That(new DateTime(2023, 01, 01), Is.EqualTo(positions.PriceHistory.Data[0].Date));
 
 
         var lastPrice = await _query.GetLatestCandle(instrumentId);
-        Assert.AreEqual(5, lastPrice.Open);
-        Assert.AreEqual(10, lastPrice.High);
-        Assert.AreEqual(2, lastPrice.Low);
-        Assert.AreEqual(4, lastPrice.Close);
+        Assert.That(5, Is.EqualTo(lastPrice.Open));
+        Assert.That(10, Is.EqualTo(lastPrice.High));
+        Assert.That(2, Is.EqualTo(lastPrice.Low));
+        Assert.That(4, Is.EqualTo(lastPrice.Close));
     }
 }

@@ -58,7 +58,8 @@ public class ALogger : IALogger
 
         var logPath = Path.Join(_logDirectory, "backservice-.log");
         var seriLogger = new LoggerConfiguration()
-        .MinimumLevel.Information()
+        //.MinimumLevel.Information()
+        .MinimumLevel.Warning()
         .WriteTo.Async(a =>
         {
             // Note: Async has a buffer behind, and will start dropping messages when it exceeds 10,000 messages!
@@ -85,7 +86,8 @@ public class ALogger : IALogger
 
         var logPath = Path.Join(_logDirectory, "exchange-.log");
         var seriLogger = new LoggerConfiguration()
-            .MinimumLevel.Information()
+            //.MinimumLevel.Information()
+            .MinimumLevel.Warning()
             .WriteTo.Async(a =>
             {
                 // Note: Async has a buffer behind, and will start dropping messages when it exceeds 10,000 messages!

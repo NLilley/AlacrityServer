@@ -11,7 +11,8 @@ public abstract class Job<T>
 
     private object _lock = new();
     private CancellationTokenSource _cts;
-    protected CancellationToken _ct => _cts.Token;
+    private CancellationToken _ctRaw;
+    protected CancellationToken _ct => _ctRaw;
 
     public Job(IALogger logger)
        => (_logger) = (logger);
@@ -32,6 +33,7 @@ public abstract class Job<T>
         }
 
         _cts = new();
+        _ctRaw = _cts.Token;
 
         await OnStart();
         var thread = new Thread(Work);

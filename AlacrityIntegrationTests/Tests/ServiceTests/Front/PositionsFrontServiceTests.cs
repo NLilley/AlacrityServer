@@ -26,6 +26,6 @@ public class PositionsFrontServiceTests
         var positions = await _service.GetPositions(_clientId);
 
         // MaxProfits has 3 positions by default
-        Assert.AreEqual(3, positions.Count);
+        Assert.That(3, Is.EqualTo(positions.Count));
     }
 }

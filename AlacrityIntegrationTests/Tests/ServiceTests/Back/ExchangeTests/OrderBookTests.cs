@@ -48,8 +48,8 @@ public class OrderBookTests
         await orderBook.HandleSubmitOrder(order);
 
         var orderInBook = await orderBook.GetOrder(order.OrderId);
-        Assert.AreEqual(0, orderInBook.Filled);
-        Assert.AreEqual(OrderStatus.Active, orderInBook.OrderStatus);
+        Assert.That(0, Is.EqualTo(orderInBook.Filled));
+        Assert.That(OrderStatus.Active, Is.EqualTo(orderInBook.OrderStatus));
     }
 
     [Test]
@@ -61,8 +61,8 @@ public class OrderBookTests
         await orderBook.HandleSubmitOrder(order1);
 
         var orderInBook1_1 = await orderBook.GetOrder(order1.OrderId);
-        Assert.AreEqual(0, orderInBook1_1.Filled);
-        Assert.AreEqual(OrderStatus.Active, orderInBook1_1.OrderStatus);
+        Assert.That(0, Is.EqualTo(orderInBook1_1.Filled));
+        Assert.That(OrderStatus.Active, Is.EqualTo(orderInBook1_1.OrderStatus));
 
         var order2 = _dummyOrder with
         {
@@ -75,10 +75,10 @@ public class OrderBookTests
         var orderInBook1_2 = await orderBook.GetOrder(order1.OrderId);
         var orderInBook2_1 = await orderBook.GetOrder(order2.OrderId);
 
-        Assert.AreEqual(0, orderInBook1_2.Filled);
-        Assert.AreEqual(OrderStatus.Active, orderInBook1_2.OrderStatus);
-        Assert.AreEqual(0, orderInBook2_1.Filled);
-        Assert.AreEqual(OrderStatus.Active, orderInBook2_1.OrderStatus);
+        Assert.That(0, Is.EqualTo(orderInBook1_2.Filled));
+        Assert.That(OrderStatus.Active, Is.EqualTo(orderInBook1_2.OrderStatus));
+        Assert.That(0, Is.EqualTo(orderInBook2_1.Filled));
+        Assert.That(OrderStatus.Active, Is.EqualTo(orderInBook2_1.OrderStatus));
     }
 
     [Test]
@@ -106,9 +106,9 @@ public class OrderBookTests
         var orderInBook1_1 = await orderBook.GetOrder(order1.OrderId);
         var orderInBook2_1 = await orderBook.GetOrder(order2.OrderId);
 
-        Assert.AreEqual(50, orderInBook1_1.Filled);
-        Assert.AreEqual(OrderStatus.Active, orderInBook1_1.OrderStatus);
-        Assert.IsNull(orderInBook2_1); // Filled, so removed       
+        Assert.That(50, Is.EqualTo(orderInBook1_1.Filled));
+        Assert.That(OrderStatus.Active, Is.EqualTo(orderInBook1_1.OrderStatus));
+        Assert.That(orderInBook2_1, Is.Null); // Filled, so removed       
     }
 
     [Test]
@@ -135,9 +135,9 @@ public class OrderBookTests
         var orderInBook1_1 = await orderBook.GetOrder(order1.OrderId);
         var orderInBook2_1 = await orderBook.GetOrder(order2.OrderId);
 
-        Assert.AreEqual(50, orderInBook1_1.Filled);
-        Assert.AreEqual(OrderStatus.Active, orderInBook1_1.OrderStatus);
-        Assert.IsNull(orderInBook2_1); // Filled, so removed
+        Assert.That(50, Is.EqualTo(orderInBook1_1.Filled));
+        Assert.That(OrderStatus.Active, Is.EqualTo(orderInBook1_1.OrderStatus));
+        Assert.That(orderInBook2_1, Is.Null); // Filled, so removed
     }
 
     [Test]
@@ -170,13 +170,13 @@ public class OrderBookTests
         var orderInBook1_1 = await orderBook.GetOrder(order1.OrderId);
         var orderInBook2_1 = await orderBook.GetOrder(order2.OrderId);
 
-        Assert.IsNull(orderInBook1_1); // Filled, so removed
-        Assert.IsNull(orderInBook2_1); // Filled, so removed
+        Assert.That(orderInBook1_1, Is.Null); // Filled, so removed
+        Assert.That(orderInBook2_1, Is.Null); // Filled, so removed
 
         var trades = await tradesQuery.GetTrades(1);
         var trade = trades.Find(t => t.OrderId == 100);
-        Assert.AreEqual(200, trade.Price);
-        Assert.AreEqual(100, trade.Quantity);
+        Assert.That(200, Is.EqualTo(trade.Price));
+        Assert.That(100, Is.EqualTo(trade.Quantity));
     }
 
     [Test]
@@ -221,14 +221,14 @@ public class OrderBookTests
 
         var firstOrder = await orderBook.GetOrder(100);
         var secondOrder = await orderBook.GetOrder(101);
-        Assert.IsNull(firstOrder); // Should have Completed
-        Assert.IsNotNull(secondOrder);
-        Assert.AreEqual(0, secondOrder.Filled);
+        Assert.That(firstOrder, Is.Null); // Should have Completed
+        Assert.That(secondOrder, Is.Not.Null);
+        Assert.That(0, Is.EqualTo(secondOrder.Filled));
 
         var trades = await tradesQuery.GetTrades(1);
         var trade = trades.Find(t => t.OrderId == 102);
-        Assert.AreEqual(100, trade.Price);
-        Assert.AreEqual(100, trade.Quantity);
+        Assert.That(100, Is.EqualTo(trade.Price));
+        Assert.That(100, Is.EqualTo(trade.Quantity));
     }
 
     [Test]
@@ -279,21 +279,21 @@ public class OrderBookTests
 
         var allTrades = await tradesQuery.GetTrades(order4.ClientId.Value);
         var orderTrades = allTrades.Where(t => t.OrderId == order4.OrderId).OrderBy(o => o.TradeId).ToList();
-        Assert.AreEqual(3, orderTrades.Count);
+        Assert.That(3, Is.EqualTo(orderTrades.Count));
 
         var remainingOrder = await orderBook.GetOrder(order4.OrderId);
-        Assert.AreEqual(300, remainingOrder.Filled);
-        Assert.AreEqual(OrderStatus.Active, remainingOrder.OrderStatus);
+        Assert.That(300, Is.EqualTo(remainingOrder.Filled));
+        Assert.That(OrderStatus.Active, Is.EqualTo(remainingOrder.OrderStatus));
 
         var trade1 = orderTrades[0];
         var trade2 = orderTrades[1];
         var trade3 = orderTrades[2];
-        Assert.AreEqual(100, trade1.Price);
-        Assert.AreEqual(50, trade1.Quantity);
-        Assert.AreEqual(100, trade2.Price);
-        Assert.AreEqual(100, trade2.Quantity);
-        Assert.AreEqual(200, trade3.Price);
-        Assert.AreEqual(150, trade3.Quantity);
+        Assert.That(100, Is.EqualTo(trade1.Price));
+        Assert.That(50, Is.EqualTo(trade1.Quantity));
+        Assert.That(100, Is.EqualTo(trade2.Price));
+        Assert.That(100, Is.EqualTo(trade2.Quantity));
+        Assert.That(200, Is.EqualTo(trade3.Price));
+        Assert.That(150, Is.EqualTo(trade3.Quantity));
     }
 
     [Test]
@@ -345,18 +345,18 @@ public class OrderBookTests
 
         var allTrades = await tradesQuery.GetTrades(order4.ClientId.Value);
         var orderTrades = allTrades.Where(t => t.OrderId == order4.OrderId).OrderBy(t => t.TradeId).ToList();
-        Assert.AreEqual(2, orderTrades.Count);
+        Assert.That(2, Is.EqualTo(orderTrades.Count));
 
         var remainingOrder = await orderBook.GetOrder(order4.OrderId);
-        Assert.AreEqual(150, remainingOrder.Filled);
-        Assert.AreEqual(OrderStatus.Active, remainingOrder.OrderStatus);
+        Assert.That(150, Is.EqualTo(remainingOrder.Filled));
+        Assert.That(OrderStatus.Active, Is.EqualTo(remainingOrder.OrderStatus));
 
         var trade1 = orderTrades[0];
         var trade2 = orderTrades[1];
-        Assert.AreEqual(150, trade1.Price);
-        Assert.AreEqual(50, trade1.Quantity);
-        Assert.AreEqual(100, trade2.Price);
-        Assert.AreEqual(100, trade2.Quantity);
+        Assert.That(150, Is.EqualTo(trade1.Price));
+        Assert.That(50, Is.EqualTo(trade1.Quantity));
+        Assert.That(100, Is.EqualTo(trade2.Price));
+        Assert.That(100, Is.EqualTo(trade2.Quantity));
     }
 
     [Test]
@@ -397,6 +397,6 @@ public class OrderBookTests
 
         var allTrades = await tradesQuery.GetTrades(order1.ClientId.Value);
         var orderTrades = allTrades.Where(t => t.OrderId == order1.OrderId).ToList();
-        Assert.AreEqual(2, orderTrades.Count);
+        Assert.That(2, Is.EqualTo(orderTrades.Count));
     }
 }

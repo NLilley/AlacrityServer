@@ -1,6 +1,5 @@
 ﻿using AlacrityCore.Enums;
 using AlacrityCore.Infrastructure;
-using AlacrityCore.Models.Back;
 using AlacrityCore.Models.DTOs;
 using AlacrityCore.Queries;
 using AlacrityCore.Services.Back.Exchange;
@@ -21,7 +20,7 @@ internal class AccountSummaryAggregator : Job<AccountSummaryAggregator>, IAccoun
     private readonly IMessageNexus _messageNexus;
     private readonly IPositionsQuery _positionsQuery;
     private readonly IWebMessageQuery _webMessageQuery;
-    private readonly IExchange _exchange;    
+    private readonly IExchange _exchange;
     public AccountSummaryAggregator(
         IALogger logger,
         IPositionsQuery positionsQuery,
@@ -82,7 +81,7 @@ internal class AccountSummaryAggregator : Job<AccountSummaryAggregator>, IAccoun
             if (!_subscribedClients.TryGetValue(t.ClientId, out var accountSummaryWrapper))
                 return;
 
-            accountSummaryWrapper.IsDirty = true;            
+            accountSummaryWrapper.IsDirty = true;
         });
     }
 
@@ -114,7 +113,7 @@ internal class AccountSummaryAggregator : Job<AccountSummaryAggregator>, IAccoun
 
             _updatedPrices.Clear();
 
-            try { await Task.Delay(TimeSpan.FromMilliseconds(500)); }
+            try { await Task.Delay(TimeSpan.FromMilliseconds(500), _ct); }
             catch { }
         }
     }

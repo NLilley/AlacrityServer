@@ -30,7 +30,7 @@ public class OrdersFrontServiceTests
         var messageNexus = new MessageNexus();
 
         var (cashPosition, averagePrice) = await positionsQuery.AddToPosition(_clientId, -1, 1_000_000, 1);
-        Assert.AreEqual(1_000_000, cashPosition);
+        Assert.That(1_000_000, Is.EqualTo(cashPosition));
 
         var exchange = new Exchange(mockExchangeLogger, ordersQuery, instrumentQuery, tradesQuery, positionsQuery, ledgerQuery, messageNexus, new TransactionLock());
         var service = new OrdersFrontService(mockOrderFrontServiceLogger, ordersQuery, instrumentQuery, positionsQuery, exchange);
@@ -56,16 +56,16 @@ public class OrdersFrontServiceTests
         await TaskUtil.AwaitPredicate(() => exchange.IsInitialized);
 
         var result1 = await service.SubmitOrder(_clientId, _dummyRequest with { OrderKind = OrderKind.MarketOrder });
-        Assert.IsNotNull(result1.FailureReason);
+        Assert.That(result1.FailureReason, Is.Not.Null);
 
         var result2 = await service.SubmitOrder(_clientId, _dummyRequest with { LimitPrice = null });
-        Assert.IsNotNull(result2);
+        Assert.That(result2, Is.Not.Null);
 
         var result3 = await service.SubmitOrder(_clientId, _dummyRequest with { OrderDirection = TradeDirection.Unknown });
-        Assert.IsNotNull(result3);
+        Assert.That(result3, Is.Not.Null);
 
         var result4 = await service.SubmitOrder(_clientId, _dummyRequest with { Quantity = -100 });
-        Assert.IsNotNull(result4);
+        Assert.That(result4, Is.Not.Null);
     }
 
     [Test]

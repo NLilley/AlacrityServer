@@ -43,9 +43,9 @@ internal class InstrumentsBackServiceTests
         });
 
         var indicators = await _frontService.GetIndicators(_instrument_id);
-        Assert.AreEqual(1, indicators.Count);
-        Assert.AreEqual("Test", indicators["Test"].Name);
-        Assert.AreEqual(10, indicators["Test"].Value);
+        Assert.That(1, Is.EqualTo(indicators.Count));
+        Assert.That("Test", Is.EqualTo(indicators["Test"].Name));
+        Assert.That(10, Is.EqualTo(indicators["Test"].Value));
 
         await _service.UpsertInstrumentIndicator(new InstrumentIndicatorDto
         {
@@ -56,8 +56,8 @@ internal class InstrumentsBackServiceTests
         });
 
         var indiactors2 = await _frontService.GetIndicators(_instrument_id);
-        Assert.AreEqual(1, indiactors2.Count);
-        Assert.AreEqual("Test", indiactors2["Test"].Name);
-        Assert.AreEqual(50, indiactors2["Test"].Value);
+        Assert.That(1, Is.EqualTo(indiactors2.Count));
+        Assert.That("Test", Is.EqualTo(indiactors2["Test"].Name));
+        Assert.That(50, Is.EqualTo(indiactors2["Test"].Value));
     }
 }

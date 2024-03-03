@@ -27,15 +27,15 @@ public class TradesQueryTests
     public async Task GetTrades()
     {
         var trades = await _tradesQuery.GetTrades(1);
-        Assert.AreEqual(1, trades.Count);
+        Assert.That(1, Is.EqualTo(trades.Count));
 
         var trade = trades[0];
-        Assert.AreEqual(1, trade.TradeId);
-        Assert.AreEqual(1, trade.ClientId);
-        Assert.AreEqual(1, trade.InstrumentId);
-        Assert.AreEqual(1, trade.OrderId);
-        Assert.AreEqual(1000, trade.Quantity);
-        Assert.AreEqual(100, trade.Price);
+        Assert.That(1, Is.EqualTo(trade.TradeId));
+        Assert.That(1, Is.EqualTo(trade.ClientId));
+        Assert.That(1, Is.EqualTo(trade.InstrumentId));
+        Assert.That(1, Is.EqualTo(trade.OrderId));
+        Assert.That(1000, Is.EqualTo(trade.Quantity));
+        Assert.That(100, Is.EqualTo(trade.Price));
     }
 
     public async Task AddTrades()
@@ -43,14 +43,14 @@ public class TradesQueryTests
         await _tradesQuery.AddTrade(_dummyTrade);
 
         var trades = await _tradesQuery.GetTrades(1);
-        Assert.AreEqual(2, trades.Count);
+        Assert.That(2, Is.EqualTo(trades.Count));
 
         var trade = trades[1];
-        Assert.AreEqual(3, trade.TradeId);
-        Assert.AreEqual(1, trade.ClientId);
-        Assert.AreEqual(1, trade.InstrumentId);
-        Assert.AreEqual(1, trade.OrderId);
-        Assert.AreEqual(100, trade.Quantity);
-        Assert.AreEqual(100, trade.Price);
+        Assert.That(3, Is.EqualTo(trade.TradeId));
+        Assert.That(1, Is.EqualTo(trade.ClientId));
+        Assert.That(1, Is.EqualTo(trade.InstrumentId));
+        Assert.That(1, Is.EqualTo(trade.OrderId));
+        Assert.That(100, Is.EqualTo(trade.Quantity));
+        Assert.That(100, Is.EqualTo(trade.Price));
     }
 }

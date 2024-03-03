@@ -27,8 +27,8 @@ public class LedgerBackServiceTests
 
         var entries = await _service.GetLedgerEntries(_clientId);
 
-        Assert.AreEqual(2, entries.Count);
-        Assert.AreEqual(200, entries[0].Quantity);
-        Assert.AreEqual(100, entries[1].Quantity);
+        Assert.That(2, Is.EqualTo(entries.Count));
+        Assert.That(200, Is.EqualTo(entries[0].Quantity));
+        Assert.That(100, Is.EqualTo(entries[1].Quantity));
     }
 }

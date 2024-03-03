@@ -26,10 +26,10 @@ public class PositionBackServiceTests
         var (pos1, price1) = await _service.AddToPosition(_clientId, _instrument_id, 10, 100);
         var (pos2, price2) = await _service.AddToPosition(_clientId, _instrument_id, 20, 200);
 
-        Assert.AreEqual(10, pos1);
-        Assert.AreEqual(100, price1);
-        Assert.AreEqual(30, pos2);
-        Assert.AreEqual(166.67, Math.Round(price2, 2));
+        Assert.That(10, Is.EqualTo(pos1));
+        Assert.That(100, Is.EqualTo(price1));
+        Assert.That(30, Is.EqualTo(pos2));
+        Assert.That(166.67, Is.EqualTo(Math.Round(price2, 2)));
 
         var positions = await _frontService.GetPositions(_clientId);
         var position = positions.Find(p => p.InstrumentId == _instrument_id);
@@ -47,7 +47,7 @@ public class PositionBackServiceTests
         var (lastPos, lastPrice) = await _service.AddToPosition(_clientId, _instrument_id, 10, 100);
         var positions3 = await _frontService.GetPositions(_clientId);
 
-        Assert.AreEqual(0M, lastPos);
+        Assert.That(0M, Is.EqualTo(lastPos));
         // Position gets deleted once hitting 0
         Assert.That(positions3, Is.Empty);
     }

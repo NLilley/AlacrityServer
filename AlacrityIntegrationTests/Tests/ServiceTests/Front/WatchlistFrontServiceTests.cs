@@ -52,7 +52,7 @@ public class WatchlistFrontServiceTests
     public async Task AddWatchlist()
     {
         var watchlistId = await _service.AddWatchlist(_clientId, "Test Watchlist");
-        Assert.IsTrue(watchlistId > 0);
+        Assert.That(watchlistId > 0, Is.True);
     }
 
     [Test]
@@ -60,7 +60,7 @@ public class WatchlistFrontServiceTests
     {
         var watchlistId = await _service.AddWatchlist(_clientId, "Another Test Watchlist!");
         var watchlistItemId = await _service.AddToWatchlist(_clientId, watchlistId.Value, _instrumentId, 1);
-        Assert.IsTrue(watchlistItemId > 0);
+        Assert.That(watchlistItemId > 0, Is.True);
     }
 
     [Test]
@@ -81,7 +81,7 @@ public class WatchlistFrontServiceTests
         var watchlistId = await _service.AddWatchlist(_clientId, name);
         await _service.DeleteWatchlist(_clientId, watchlistId.Value);
         var watchlists = await _service.GetWatchlists(_clientId);
-        Assert.IsNull(watchlists.FirstOrDefault(w => w.Name == name));
+        Assert.That(watchlists.FirstOrDefault(w => w.Name == name), Is.Null);
     }
 
     [Test]

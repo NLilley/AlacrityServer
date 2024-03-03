@@ -67,8 +67,8 @@ public class PriceHistoryFrontServiceTests
         });
 
         // Should skip first record, and drop last record
-        Assert.AreEqual(2, history.PriceHistory.Data.Count);
-        Assert.AreEqual(2, history.PriceHistory.Data[0].Open);
-        Assert.AreEqual(3, history.PriceHistory.Data[1].Open);
+        Assert.That(2, Is.EqualTo(history.PriceHistory.Data.Count));
+        Assert.That(2, Is.EqualTo(history.PriceHistory.Data[0].Open));
+        Assert.That(3, Is.EqualTo(history.PriceHistory.Data[1].Open));
     }
 }

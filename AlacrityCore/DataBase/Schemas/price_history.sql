@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS price_history (
 CREATE INDEX IF NOT EXISTS price_history_instrument_id ON price_history(instrument_id);
 CREATE INDEX IF NOT EXISTS price_history_time_period ON price_history(time_period);
 CREATE UNIQUE INDEX IF NOT EXISTS price_history_instrument_period_date ON price_history(instrument_id, time_period, price_date);
+CREATE INDEX IF NOT EXISTS price_history_created_date ON price_history(created_date);
 
 CREATE TRIGGER IF NOT EXISTS price_history_updated AFTER UPDATE ON price_history
 BEGIN

@@ -23,7 +23,7 @@ public class AuthenticationUtilTests
     [TestCase("Wh4tAPrettyPassword@")]
     [TestCase("$£AndAnotherBigOne1111")]
     public void IsPasswordComplex_ValidPasswords(string password)
-        => Assert.IsTrue(AuthenticationUtil.IsPasswordComplex(password));
+        => Assert.That(AuthenticationUtil.IsPasswordComplex(password), Is.True);
 
     [TestCase(null)]
     [TestCase("")]
@@ -32,7 +32,7 @@ public class AuthenticationUtilTests
     [TestCase("VeryBasic")]
     [TestCase("12InvalidSymbols____")]
     [TestCase("NeedsMoreComplexity")]
-    public void IsPasswordComplex_InvalidPasswords(string password)
-        => Assert.IsFalse(AuthenticationUtil.IsPasswordComplex(password));
+    public void IsPasswordComplex_InvalidPasswords(string? password)
+        => Assert.That(AuthenticationUtil.IsPasswordComplex(password), Is.False);
     
 }

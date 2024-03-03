@@ -127,8 +127,8 @@ public class ExchangeTests
         await ordersQuery.UpdateOrder(newOrder.OrderId, 100, OrderStatus.Completed);
 
         var newOrderFresh = await ordersQuery.GetOrder(newOrder.OrderId);
-        Assert.AreEqual(100, newOrderFresh.Filled);
-        Assert.AreEqual(OrderStatus.Completed, newOrderFresh.OrderStatus);
+        Assert.That(100, Is.EqualTo(newOrderFresh.Filled));
+        Assert.That(OrderStatus.Completed, Is.EqualTo(newOrderFresh.OrderStatus));
     }
 
     [Test]
@@ -144,7 +144,7 @@ public class ExchangeTests
 
         var orders = await ordersQuery.GetOrders(null); // Null to query all orders
         var activeOrders = orders.Where(o => o.OrderStatus == OrderStatus.Active).ToList();
-        Assert.AreEqual(2, activeOrders.Count);
+        Assert.That(2, Is.EqualTo(activeOrders.Count));
 
         exchange.Start();
         Thread.Sleep(10);
@@ -199,20 +199,20 @@ public class ExchangeTests
         var foundOrder1 = orders1.Find(o => o.OrderId == 100);
         var foundOrder2 = orders2.Find(o => o.OrderId == 101);
 
-        Assert.NotNull(foundOrder1);
-        Assert.NotNull(foundOrder2);
+        Assert.That(foundOrder1, Is.Not.Null);
+        Assert.That(foundOrder2, Is.Not.Null);
 
-        Assert.AreEqual(OrderStatus.Completed, foundOrder1.OrderStatus);
-        Assert.AreEqual(OrderStatus.Active, foundOrder2.OrderStatus);
+        Assert.That(OrderStatus.Completed, Is.EqualTo(foundOrder1.OrderStatus));
+        Assert.That(OrderStatus.Active, Is.EqualTo(foundOrder2.OrderStatus));
 
-        Assert.AreEqual(100, foundOrder1.Filled);
-        Assert.AreEqual(130, foundOrder2.Filled);
+        Assert.That(100, Is.EqualTo(foundOrder1.Filled));
+        Assert.That(130, Is.EqualTo(foundOrder2.Filled));
 
         var trades1 = await tradesQuery.GetTrades(1);
         var trade1 = trades1.Find(t => t.OrderId == 100);
         var trades2 = await tradesQuery.GetTrades(2);
         var trade2 = trades2.Find(t => t.OrderId == 101);
-        Assert.AreEqual(100, trade1.Quantity);
-        Assert.AreEqual(100, trade2.Quantity);
+        Assert.That(100, Is.EqualTo(trade1.Quantity));
+        Assert.That(100, Is.EqualTo(trade2.Quantity));
     }
 }

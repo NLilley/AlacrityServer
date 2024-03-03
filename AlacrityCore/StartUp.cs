@@ -5,6 +5,7 @@ using AlacrityCore.Services.Back;
 using AlacrityCore.Services.Back.Aggregation;
 using AlacrityCore.Services.Back.Communication;
 using AlacrityCore.Services.Back.Exchange;
+using AlacrityCore.Services.Back.Util;
 using AlacrityCore.Services.Front;
 using AlacrityCore.Utils;
 using Microsoft.Data.Sqlite;
@@ -21,6 +22,7 @@ public static class StartUp
     private static MarketParticipantManager _marketParticipantManager;
     private static PriceAggregator _priceAggregator;
     private static AccountSummaryAggregator _accountSummaryAggregator;
+    private static CleanUpJob _cleanUpJob;
     private static Messenger _messenger;
 
     public static void SetUpCoreService(ILogger logger, IALogger backServiceLogger, IServiceCollection services)
@@ -138,7 +140,7 @@ public static class StartUp
             provider.GetService<IPositionsQuery>(),
             provider.GetService<IWebMessageQuery>(),
             _exchange,
-            messageNexus                        
+            messageNexus
         );
         await _accountSummaryAggregator.Start();
         serverLogger.Warning("AccountSummaryAggregator created and initialized");
@@ -151,6 +153,10 @@ public static class StartUp
             provider.GetService<IWebMessageQuery>()
         );
         _messenger.SubscribeMessages();
+
+        _cleanUpJob = new CleanUpJob(exchangeLogger, provider.GetService<IPriceHistoryQuery>());
+        await _cleanUpJob.Start();
+        serverLogger.Warning("Cleanup Job started");
     }
 
     public static void Stop()
@@ -159,5 +165,6 @@ public static class StartUp
         _marketParticipantManager?.Stop();
         _exchange?.Stop();
         _accountSummaryAggregator?.Stop();
+        _cleanUpJob?.Stop();
     }
 }
