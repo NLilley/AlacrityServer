@@ -22,12 +22,12 @@ AlacrityServer is a self contained AspNetCore C# application providing backend f
 #### This server supports:
 - A Managed Order Book
 - (Very simple) Market Participants which interact with the market using their own trading strategies.
-- Basic account funtionality (Login, Logout, Password Management, etc.)
-- Real time streaming price data (for simultated instruments)
+- Basic account functionality (Login, Logout, Password Management, etc.)
+- Real time streaming price data (for simulated instruments)
 - Historic candle storage and recovery
 - Market and Limit Orders
 - Trading Notification System
-- Profit Loss calculation, Porfolio Analysis
+- Profit Loss calculation, Portfolio Analysis
 - ... and other essential backend behaviours
 
 # Build
@@ -46,13 +46,13 @@ Succinctly:
 
 # Technology
 
-This project has relatively few dependencies, and is largely a hand-crafted C# application.  Data is stored in an SQL database, and CRUD operations are perfromed through the Dapper Micro ORM.  Structured logging support is provided by SeriLog.  Real Time Data Streaming is provided by SignalR.
+This project has relatively few dependencies, and is largely a hand-crafted C# application.  Data is stored in an SQL database, and CRUD operations are performed through the Dapper Micro ORM.  Structured logging support is provided by SeriLog.  Real Time Data Streaming is provided by SignalR.
 
 Otherwise the project is standalone, and can be understood simply by reading the codebase.
 
 # Testing
 
-The project is tested by a small set of Unit and Integration tests. These tests would be insufficient for a production-ready system, but are more than adaquate for the purposes of a demonstration, and serve as proof of fundamental functionality, as well as providing context regarding the intended behaviour of the underlying system.
+The project is tested by a small set of Unit and Integration tests. These tests would be insufficient for a production-ready system, but are more than adequate for the purposes of a demonstration, and serve as proof of fundamental functionality, as well as providing context regarding the intended behaviour of the underlying system.
 
 The Unit Tests are found in the AlacrityTests.csproj project.
 The Integration Tests can be found in the AlacrityIntegrationTests.csproj project.
@@ -65,7 +65,7 @@ The underlying code is structured into a simple and intuitive model hierarchy. T
 - AlacrityTests
 - AlacrityIntegrationTests
 
-The AlacrityServer is the entry point for the application, and is responsible for bootstrapping the entire application, as well web app functionality through the use of Kestrel. Where possible, underlying logic is owned by the AlacrityCore project and is decoupled from the WebApp logic. Due to this seperation of concerns, it would be relatively easy to split this functionality off into it's own micro-service oriented design if needed in support of scaling and improving reliability.
+The AlacrityServer is the entry point for the application, and is responsible for bootstrapping the entire application, as well web app functionality through the use of Kestrel. Where possible, underlying logic is owned by the AlacrityCore project and is decoupled from the WebApp logic. Due to this separation of concerns, it would be relatively easy to split this functionality off into it's own micro-service oriented design if needed in support of scaling and improving reliability.
 
 The Server project itself has something like the following file structure:
 - Controllers: AspNet controllers serving most web requests
@@ -73,17 +73,17 @@ The Server project itself has something like the following file structure:
 - Infrastructure: The boilerplate required to initialize and start up the full service
 
 The AlacrityCore project is similarly simple:
-- DataBase: SQL, SQLite data store and simillar DB Logic
+- DataBase: SQL, SQLite data store and similar DB Logic
 - Enums: All project enums
 - Infrastructure: Other essential behaviours
 - Models: Basic POCO models representing business logic entities
-- Queries: Dapper loggic for interacting with the database.
+- Queries: Dapper logic for interacting with the database.
 - Services: Main access point into underlying trading behaviours
 - Utils: Other helper methods
 
 # Conclusion
 
 Thanks again for taking the time to review this project!
-If you have any questions, don't hesistate to reach out, and happy trading with Alacrity!
+If you have any questions, don't hesitate to reach out, and happy trading with Alacrity!
 
 \- N
