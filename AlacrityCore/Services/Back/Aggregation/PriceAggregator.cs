@@ -70,10 +70,11 @@ internal class PriceAggregator : Job<PriceAggregator>
                     var foundCandle = existingHistory.FirstOrDefault(c => c.Date == dateTime);
                     if (foundCandle == null)
                     {
-                        // Need to predice a sensible price from the previous data.
-                        // Note: Current implementation can gap a long way!
+                        // Need to predict a sensible price from the previous data.                        
                         var close = lastFoundCandle?.Open ?? latestMid;
-                        var open = close * (decimal)Math.Pow(1.0001, 10 * (random.NextDouble() - 0.5));
+                        var gapFactor = (decimal)Math.Pow(1.0001, 10 * (random.NextDouble() - 0.5));
+
+                        var open = close * gapFactor;
                         var high = close + (0.1M * (close - open) * (decimal)random.NextDouble());
                         var low = close - (0.1M * (close - open) * (decimal)random.NextDouble());
                         if (high < low)

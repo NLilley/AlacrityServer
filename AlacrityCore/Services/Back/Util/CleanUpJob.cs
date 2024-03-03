@@ -29,11 +29,11 @@ internal class CleanUpJob : Job<CleanUpJob>
     {
         while(!_ct.IsCancellationRequested)
         {
-            var olderThan = DateTime.UtcNow.Subtract(TimeSpan.FromHours(1));
-            await _priceHistoryQuery.DeleteOldCandles(olderThan);
-
             try { await Task.Delay(TimeSpan.FromMinutes(5), _ct); }
             catch { }
+
+            var olderThan = DateTime.UtcNow.Subtract(TimeSpan.FromHours(1));
+            await _priceHistoryQuery.DeleteOldCandles(olderThan);
         }
     }
 }
